@@ -1,0 +1,8 @@
+---
+- name: Install NGINX and apache2-utils
+  ansible.builtin.apt:
+    update_cache: yes
+    name: 
+      - nginx
+      - apache2-utils
+    state: present

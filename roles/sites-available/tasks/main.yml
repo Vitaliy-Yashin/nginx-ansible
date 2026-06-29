@@ -1,0 +1,48 @@
+---
+
+- name: Find old configs
+  ansible.builtin.find:
+    paths:
+      - /etc/nginx/sites-available
+      - /etc/nginx/sites-enabled
+    file_type: file
+  register: old_configs
+
+
+- name: Remove old configs
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ old_configs.files }}" 
+
+- name: Copy from a repository
+  ansible.builtin.copy:
+    src: "files/sites-available/"
+    dest: "/etc/nginx/sites-available/" 
+  notify: reload nginx   
+
+- name: Creat Links
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ item | basename }}"
+    dest: "/etc/nginx/sites-enabled/{{ item | basename }}" 
+    state: link
+  with_fileglob:
+    - files/sites-available/*.conf  
+  #loop: "{{ query('fileglob', 'files/sites-available/*.conf') | map('basename') | list }}" 
+  #loop_control: 
+    #label: "{{ item }}"
+  notify: reload nginx # Выполняется всегда в конце после всех tasks
+  
+- name: Copy cert
+  ansible.builtin.copy:
+    src: "files/certs/"
+    dest: "/etc/ssl/private/"        
+
+- name: Check syntax
+  ansible.builtin.command:
+    cmd: nginx -t
+  changed_when: false
+
+
+
+

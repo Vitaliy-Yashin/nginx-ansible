@@ -1,0 +1,13 @@
+files/certs/*/*.key
+*.retry
+*.log
+*.tmp
+.ansible/
+vault_pass.txt
+inventory/production/hosts
+inventory/production/group_vars/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+

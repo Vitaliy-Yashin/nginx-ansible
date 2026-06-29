@@ -1,0 +1,8 @@
+---
+- name: Copy Basic
+  ansible.builtin.template:
+    src: files/basic_auth/f.local/.htpasswd
+    dest: /etc/nginx/.htpasswd
+    mode: '750'
+    owner: 'www-data'
+    group: 'www-data'

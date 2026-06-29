@@ -1,0 +1,14 @@
+---
+- name: Nginx download
+  hosts: locals
+  become: true
+  roles:
+    #- nginx_install_packages
+    #- default_site
+    - nginx_conf
+    #- basic_auth
+    - sites-available
+
+ 
+ 
+
