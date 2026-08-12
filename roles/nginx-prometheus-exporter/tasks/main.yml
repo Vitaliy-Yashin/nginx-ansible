@@ -1,0 +1,10 @@
+- name: Container run nginx-prometheus-exporter
+  community.docker.docker_container:
+    name: nginx-prometheus-exporter
+    image: nginx/nginx-prometheus-exporter:1.5.1
+    state: started
+    restart_policy: unless-stopped
+    ports:
+     - 9113:9113
+    command:
+      - "--nginx.scrape-uri=http://10.130.0.34:8080/basic_status" 
