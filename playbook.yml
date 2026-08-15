@@ -3,12 +3,13 @@
   hosts: locals
   become: true
   roles:
-    #- nginx_install_packages
-    #- default_site
+    - nginx_install_packages
+    - default_site
     - nginx_conf
-    #- basic_auth
+    - basic_auth
     - sites-available
-    #- nginx-prometheus-exporter
+    - geerlingguy.docker
+    - nginx-prometheus-exporter
 
  
  
